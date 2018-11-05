@@ -29,10 +29,22 @@ public class MainActivity extends AppCompatActivity {
         initFirebase();
 
         // readDatabaseData();
-        writeDatabaseData();
+        // writeDatabaseData();
+        writeObject();
         // readObjects();
-        // writeObjects();
         // authentication();
+    }
+
+    private void writeObject() {
+        ChatMessage msg = new ChatMessage();
+        msg.sender = "Lydia";
+        msg.sentTime = "5:30 2018-11-04";
+        msg.chatMessage = "Hello World";
+
+        DatabaseReference ref = mDatabase.getReference("chatMessages")
+                .child(msg.sender + " " + msg.sentTime);
+        ref.setValue(msg);
+
     }
 
     private void writeDatabaseData() {
