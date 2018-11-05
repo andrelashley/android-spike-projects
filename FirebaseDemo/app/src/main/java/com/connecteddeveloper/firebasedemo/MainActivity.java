@@ -42,10 +42,40 @@ public class MainActivity extends AppCompatActivity {
         // readObjects();
 
 
-        registerNewUser();
-        //logout();
+        //registerNewUser();
+        // logout();
         //loginUser();
-        //logout();
+        logout();
+    }
+
+    private void loginUser() {
+        OnCompleteListener<AuthResult> success = new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful())
+                    Log.e(TAG, "User logged on");
+                else
+                    Log.e(TAG, "User log on response, but failed");
+            }
+        };
+
+        OnFailureListener fail = new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e(TAG, "User log on failed");
+            }
+        };
+
+        String email = "andre.lashley@gmail.com";
+        String password = "THGHOBS316!";
+
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(success)
+                .addOnFailureListener(fail);
+    }
+
+    private void logout() {
+        mAuth.signOut();
     }
 
     private void registerNewUser() {
