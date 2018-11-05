@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -18,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
 
     FirebaseApp mApp;
     FirebaseDatabase mDatabase;
+    FirebaseAuth mAuth;
+    FirebaseAuth.AuthStateListener mAuthListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +87,21 @@ public class MainActivity extends AppCompatActivity {
     private void initFirebase() {
         mApp = FirebaseApp.getInstance();
         mDatabase = FirebaseDatabase.getInstance(mApp);
+        mAuth = FirebaseAuth.getInstance(mApp);
+
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = mAuth.getCurrentUser();
+
+                if(user != null) {
+                    Log.e(TAG, "User is logged in : " + user.getEmail().toString());
+                } else {
+                    Log.e(TAG, "No user logged in");
+                }
+            }
+        };
+        mAuth.addAuthStateListener(mAuthListener);
     }
 
     private void readDatabaseData() {
