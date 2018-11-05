@@ -30,9 +30,33 @@ public class MainActivity extends AppCompatActivity {
 
         // readDatabaseData();
         // writeDatabaseData();
-        writeObject();
+        //writeObject();
         // readObjects();
         // authentication();
+    }
+
+    private void readObjects() {
+        DatabaseReference ref = mDatabase.getReference("chatMessages");
+
+        ValueEventListener listener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Log.e(TAG, "onDataChange: Data received " + dataSnapshot.getChildrenCount());
+
+                for(DataSnapshot child : dataSnapshot.getChildren()) {
+                    ChatMessage msg;
+                    msg = child.getValue(ChatMessage.class);
+
+                    Log.e(TAG, "Child : " + msg.chatMessage);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        };
+        ref.addValueEventListener(listener);
     }
 
     private void writeObject() {
