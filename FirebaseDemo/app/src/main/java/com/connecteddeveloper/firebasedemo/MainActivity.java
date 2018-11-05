@@ -28,11 +28,20 @@ public class MainActivity extends AppCompatActivity {
 
         initFirebase();
 
-        readDatabaseData();
-        // writeDatabaseData();
+        // readDatabaseData();
+        writeDatabaseData();
         // readObjects();
         // writeObjects();
         // authentication();
+    }
+
+    private void writeDatabaseData() {
+        DatabaseReference ref = mDatabase.getReference("chatMessages")
+                .child("Andre 12:43:25 11-04-2018");
+
+        ref.child("sentTime").setValue("12:43:25 11-04-2018");
+        ref.child("sender").setValue("Andre");
+        ref.child("chatMessage").setValue("Today is Sunday and it's sunny");
     }
 
     private void initFirebase() {
