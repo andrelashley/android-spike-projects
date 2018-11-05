@@ -49,6 +49,17 @@ public class MainActivity extends AppCompatActivity {
                 Log.e(TAG, "onDataChange: Snapshot received"
                         + dataSnapshot.getChildren() + " key : " + dataSnapshot.getKey().toString()
                 + " value : " + dataSnapshot.getValue().toString());
+
+                for(DataSnapshot child : dataSnapshot.getChildren()) {
+                    Log.e(TAG, "Child node: " + child.getChildrenCount() + " key: " +
+                            child.getKey().toString() + " value : " + child.getValue().toString());
+
+                    for(DataSnapshot grandChild : child.getChildren()) {
+                        Log.e(TAG, "grandChild node: " + grandChild.getChildrenCount()
+                                + " key: " + grandChild.getKey().toString() + " value : "
+                                + grandChild.getValue().toString());
+                    }
+                }
             }
 
             @Override
